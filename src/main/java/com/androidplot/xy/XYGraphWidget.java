@@ -685,18 +685,18 @@ public class XYGraphWidget extends Widget {
         y -= MARKER_LABEL_SPACING;
         RectF textRect = new RectF(FontUtils.getStringDimensions(text,
                 marker.getTextPaint()));
-        textRect.offsetTo(x, y - textRect.height());
+        textRect.offsetTo(x-textRect.width()/2, y - textRect.height());
 
-        if (textRect.right > paddedGridRect.right) {
-            textRect.offset(-(textRect.right - paddedGridRect.right), 0);
-        }
+        //Do not need to reset text position in case if it is out of visible area
+        //Need to not show text if it is out of visible area at all
+//        if (textRect.right > paddedGridRect.right) {
+//            textRect.offset(-(textRect.right - paddedGridRect.right), 0);
+//        }
 
         if (textRect.top < paddedGridRect.top) {
             textRect.offset(0, paddedGridRect.top - textRect.top);
         }
-
-        canvas.drawText(text, textRect.left, textRect.bottom,
-                marker.getTextPaint());
+            canvas.drawText(text, textRect.left, textRect.bottom, marker.getTextPaint());
 
     }
 
@@ -735,20 +735,22 @@ public class XYGraphWidget extends Widget {
                         .getCalculatedMinX().doubleValue(), plot
                         .getCalculatedMaxX().doubleValue(), paddedGridRect
                         .width(), false);
-                xPix += paddedGridRect.left;
-                canvas.drawLine(xPix, paddedGridRect.top, xPix,
-                        paddedGridRect.bottom, marker.getLinePaint());
+                if(xPix >= 0) {
+                    xPix += paddedGridRect.left;
+                    canvas.drawLine(xPix, paddedGridRect.top, xPix,
+                            paddedGridRect.bottom, marker.getLinePaint());
 
-                // String text = getFormattedDomainValue(xVal);
-                float yPix = marker.getTextPosition().getPixelValue(
-                        paddedGridRect.height());
-                yPix += paddedGridRect.top;
-                if (marker.getText() != null) {
-                    drawMarkerText(canvas, marker.getText(), marker, xPix, yPix);
-                } else {
-                    drawMarkerText(canvas,
-                            getFormattedDomainValue(marker.getValue()), marker,
-                            xPix, yPix);
+                    // String text = getFormattedDomainValue(xVal);
+                    float yPix = marker.getTextPosition().getPixelValue(
+                            paddedGridRect.height());
+                    yPix += paddedGridRect.top;
+                    if (marker.getText() != null) {
+                        drawMarkerText(canvas, marker.getText(), marker, xPix, yPix);
+                    } else {
+                        drawMarkerText(canvas,
+                                getFormattedDomainValue(marker.getValue()), marker,
+                                xPix, yPix);
+                    }
                 }
             }
         }

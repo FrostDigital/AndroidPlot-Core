@@ -47,7 +47,8 @@ public class BarRenderer<T extends BarFormatter> extends XYSeriesRenderer<T> {
 
     public enum BarWidthStyle {
         FIXED_WIDTH,        // bar width is always barWidth
-        VARIABLE_WIDTH      // bar width is calculated so that there is only barGap between each bar
+        VARIABLE_WIDTH,      // bar width is calculated so that there is only barGap between each bar
+        RELATIVE_WIDTH
     }
 
     public BarRenderer(XYPlot plot) {
@@ -82,6 +83,7 @@ public class BarRenderer<T extends BarFormatter> extends XYSeriesRenderer<T> {
     	setBarWidthStyle(style);
         switch (style) {
         	case FIXED_WIDTH:
+            case RELATIVE_WIDTH:
         		setBarWidth(value);
                 break;
         	case VARIABLE_WIDTH:
@@ -187,7 +189,14 @@ public class BarRenderer<T extends BarFormatter> extends XYSeriesRenderer<T> {
 
 			// Determine the exact left and right X for the Bar Group
 			switch (widthStyle) {
-			case FIXED_WIDTH:
+            case RELATIVE_WIDTH:
+                // use intX and go halfwidth either side.
+                float relativeWidth = barWidth * plotArea.width() / (getPlot().getCalculatedMaxX().floatValue() - getPlot().getCalculatedMinX().floatValue());
+                barGroup.leftX = barGroup.intX - (int) (relativeWidth / 2);
+                barGroup.width = (int) relativeWidth;
+                barGroup.rightX = barGroup.leftX + barGroup.width;
+                break;
+            case FIXED_WIDTH:
     			// use intX and go halfwidth either side.
     			barGroup.leftX = barGroup.intX - (int) (barWidth / 2);
     			barGroup.width = (int) barWidth;

@@ -693,9 +693,9 @@ public class XYGraphWidget extends Widget {
 //            textRect.offset(-(textRect.right - paddedGridRect.right), 0);
 //        }
 
-        if (textRect.top < paddedGridRect.top) {
-            textRect.offset(0, paddedGridRect.top - textRect.top);
-        }
+//        if (textRect.top < paddedGridRect.top) {
+//            textRect.offset(0, paddedGridRect.top - textRect.top);
+//        }
             canvas.drawText(text, textRect.left, textRect.bottom, marker.getTextPaint());
 
     }

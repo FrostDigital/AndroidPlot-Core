@@ -23,9 +23,9 @@ gen/
 .gradle
 /*/local.properties
 /*/out
-**/build/
+/build/
 /*/*/production
-**/*.iml
+*.iml
 *.iws
 *.ipr
 *~

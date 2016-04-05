@@ -1,13 +1,3 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.0-alpha5'
-    }
-}
-
 group = 'com.androidplot'
 version = '0.6.1-SNAPSHOT'
 
@@ -16,7 +6,7 @@ description = """AndroidPlot-Core"""
 configurations.all {
 }
 
-apply plugin: 'android-library'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 22

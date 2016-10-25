@@ -567,6 +567,7 @@ public abstract class Plot<SeriesType extends Series, FormatterType extends Form
 
     @Override
     protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
         synchronized(renderSynch) {
             keepRunning = false;
             renderSynch.notify();

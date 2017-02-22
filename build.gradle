@@ -15,6 +15,7 @@ android {
     defaultConfig {
         minSdkVersion 9
         targetSdkVersion 22
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     sourceSets {
@@ -28,11 +29,13 @@ android {
         }
     }
 
-
     lintOptions {
         abortOnError false
     }
 }
 
-dependencies {    
+dependencies {
+    // Unit testing
+    testCompile 'junit:junit:4.12'
+    testCompile group: 'com.googlecode.jmockit', name: 'jmockit', version: '1.0'
 }

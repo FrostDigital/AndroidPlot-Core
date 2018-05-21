@@ -9,12 +9,12 @@ configurations.all {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion '23.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
-        minSdkVersion 9
-        targetSdkVersion 22
+        minSdkVersion 19
+        targetSdkVersion 27
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -29,13 +29,33 @@ android {
         }
     }
 
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+
+        debug {
+            debuggable true
+            minifyEnabled false
+        }
+
+        beta {
+            initWith debug
+        }
+    }
+
+
     lintOptions {
         abortOnError false
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
     // Unit testing
-    testCompile 'junit:junit:4.12'
-    testCompile group: 'com.googlecode.jmockit', name: 'jmockit', version: '1.0'
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'com.googlecode.jmockit:jmockit:1.0'
 }
